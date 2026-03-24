@@ -38,18 +38,23 @@ Hooks.Add( this, "OnEntitySpawned", function(ent)
 	{
 		ent.ValidateScriptScope();
 		local scope = ent.GetScriptScope();
-		scope.Init <- function() {}
+		scope.OnPostSpawn <- function() {}
 		scope.Spawn <- function() {}
+		scope.Init <- function() {}
 		IncludeScript("game_entities/" + ent.GetClassname(), scope);
 		
 		if ("Init" in scope)
 		{
 			scope.Init();
 		}
-		
 		if ("Spawn" in scope)
 		{
 			scope.Spawn();
+		}
+		// Support 'OnPostSpawn'
+		if ("OnPostSpawn" in scope)
+		{
+			scope.OnPostSpawn();
 		}
 		
 		printl("Running code on game entity: " + scope);
