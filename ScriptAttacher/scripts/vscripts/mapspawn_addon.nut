@@ -16,9 +16,15 @@ Hooks.Add( this, "OnEntitySpawned", function(ent)
 	{
 		ent.ValidateScriptScope();
 		local scope = ent.GetScriptScope();
+		scope.Precache <- function() {}
 		scope.Init <- function() {}
 		scope.Spawn <- function() {}
 		IncludeScript("game_entities/" + ent.GetClassname(), scope);
+		
+		if ("Precache" in scope)
+		{
+			scope.Precache();
+		}
 		
 		if ("Init" in scope)
 		{
