@@ -3,7 +3,7 @@ Entities.EnableEntityListening();
 if ( CLIENT_DLL )
 {
 	printl("\n>>>>>>>>>>Script Attacher<<<<<<<<<<")
-	printl(">>>>>>>>>>>Verson 1.2.5<<<<<<<<<<<<")
+	printl(">>>>>>>>>>>Verson 1.2.6<<<<<<<<<<<<")
 	printl(">>>>>>>>>>>>>Original code By IBRS, edited by meow meow meow<<<<<<<<<<<<<\n")
 }
 
@@ -17,14 +17,30 @@ Hooks.Add( this, "OnEntitySpawned", function(ent)
 		ent.ValidateScriptScope();
 		local scope = ent.GetScriptScope();
 		scope.Precache <- function() {}
-		scope.Init <- function() {}
-		scope.Spawn <- function() {}
 		IncludeScript("game_entities/" + ent.GetClassname(), scope);
 		
 		if ("Precache" in scope)
 		{
 			scope.Precache();
 		}
+		
+		printl("Running code on game entity: " + scope);
+	}
+	catch(exception)
+	{
+		printl(exception);
+	}
+}, "SCRIPT_ATTACHER_ONCREATEHOOK" );
+
+Hooks.Add( this, "OnEntitySpawned", function(ent)
+{
+	try
+	{
+		ent.ValidateScriptScope();
+		local scope = ent.GetScriptScope();
+		scope.Init <- function() {}
+		scope.Spawn <- function() {}
+		IncludeScript("game_entities/" + ent.GetClassname(), scope);
 		
 		if ("Init" in scope)
 		{
@@ -42,4 +58,4 @@ Hooks.Add( this, "OnEntitySpawned", function(ent)
 	{
 		printl(exception);
 	}
-}, "SCRIPT_ATTACHER_ONCREATEHOOK" );
+}, "SCRIPT_ATTACHER_ONSPAWNHOOK" );
