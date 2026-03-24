@@ -10,7 +10,7 @@ if ( CLIENT_DLL )
 // DATA DUMP
 // https://gist.githubusercontent.com/samisalreadytaken/7b85fa38a2c9cac9bfefa3440f9efb4f/raw/1bd9010fe3ccdf12ddab7970911f96df5c31ef53/datadump_ai_ally_speech_manager_sv.log
 
-Hooks.Add( this, "OnEntitySpawned", function(ent)
+Hooks.Add( this, "OnEntityCreated", function(ent)
 {
 	try
 	{
